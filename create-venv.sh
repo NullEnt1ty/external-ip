@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
+set -e
 
 dir="$(cd "$(dirname "$0")" && pwd)"
 venv_dir="$dir/.venv"
 
-if [ -d "$venv_dir" ]; then
-  echo ">>> venv directory '$venv_dir' already exists. Skipping creation"
+if [[ -d "$venv_dir" ]]; then
+  echo ">>> virtual environment '$venv_dir' already exists. Skipping creation"
 else
-  echo ">>> Creating venv directory"
+  echo ">>> Creating virtual environment"
   python3 -m venv "$venv_dir"
 fi
 
-. "$venv_dir/bin/activate"
+source "$venv_dir/bin/activate"
 
 echo ">>> Upgrading pip"
 pip install --upgrade pip

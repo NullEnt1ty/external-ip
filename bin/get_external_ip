@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+dir="$(cd "$(dirname "$0")" && pwd)"
+src_dir=$(realpath "$dir/..")
+venv_dir="$src_dir/.venv"
+
+if [[ ! -d "$venv_dir" ]]; then
+    echo ">>> Missing virtual environment at $venv_dir"
+    echo ">>> Did you run 'create-venv.sh'?"
+    exit 1
+fi
+
+source "$venv_dir/bin/activate"
+
+export PYTHONPATH="$src_dir:$PYTHONPATH"
+python -m external_ip "$@"
