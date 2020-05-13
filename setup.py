@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='nullent1ty-external-ip',
-    version='1.0.0',
+    version='1.0.1',
     author="Dominique Mattern",
     author_email="dominique@mattern.dev",
     description="Retrieve your external IPv4 address.",
