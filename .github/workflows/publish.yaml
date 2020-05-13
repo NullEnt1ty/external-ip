@@ -1,0 +1,63 @@
+name: Publish package
+
+on:
+  push:
+    branches:
+      - master
+      - beta
+      - develop
+      - feature/*
+
+jobs:
+  lint:
+    runs-on: ubuntu-18.04
+    steps:
+      - run: |
+          echo "Linting is wip"
+
+  build:
+    runs-on: ubuntu-18.04
+    needs: lint
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel
+      - name: Build
+        run: |
+          make build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: external_ip
+          path: dist/*
+
+  publish_pypi:
+    runs-on: ubuntu-18.04
+    needs: build
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install twine
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: external_ip
+          path: dist
+      - name: Publish on PyPi
+        run: |
+          echo "Publishing on PyPi"
+          pwd
+          ls -R
