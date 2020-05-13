@@ -8,7 +8,7 @@ with open("requirements.txt", "r") as requirements_file:
 
 setuptools.setup(
     name='nullent1ty-external-ip',
-    version='1.0.1',
+    version='1.0.2',
     author="Dominique Mattern",
     author_email="dominique@mattern.dev",
     description="Retrieve your external IPv4 address.",
