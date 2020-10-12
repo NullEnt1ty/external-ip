@@ -9,6 +9,15 @@ on:
       - feature/*
 
 jobs:
+  test_self_hosted_runner:
+    runs-on: ['self-hosted', 'windows']
+    steps:
+      - run: |
+          echo "Running on self-hosted Windows runner"
+          pwd
+          dir
+          hostname
+
   lint:
     runs-on: ubuntu-18.04
     steps:
